@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SideNavi</title>
+    <link rel="stylesheet" href="/dest/scss/sideNavi.css">
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/gsap/src/minified/TweenMax.min.js"></script>
+    <script src="/dest/js/SideNav.js"></script>
+</head>
+<style>
+    body{
+        background-color: #eee;
+    }
+</style>
+<body>
+<section class="km-side-navi" id="exampleSide"></section>
+<section class="km-side-navi" id="exampleSide2"></section>
+</body>
+<script>    
+    var SideNav = new SideNavi({id:'exampleSide2'});
+    var options = {
+        menu : ['item1','item2','item3','item4','item5'],
+        position : 'left',
+        themeColor : '#1ed1dc',
+        id : 'exampleSide'
+    }
+    var SideNav = new SideNavi(options);
+</script>
+</html>
