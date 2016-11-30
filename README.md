@@ -1,4 +1,4 @@
-# SideNav
+# AnimatedSideNav
 A Nice and Animated Side Navigation Bar Built by jQuery&amp;TweenMax(GSAP)
 
 ![](http://ww3.sinaimg.cn/large/71d81503jw1fa9ahrwyqmg205z0cajug.gif) 
