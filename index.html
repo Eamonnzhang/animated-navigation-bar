@@ -3,28 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>SideNavi</title>
-    <link rel="stylesheet" href="/dest/scss/sideNavi.css">
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="/bower_components/gsap/src/minified/TweenMax.min.js"></script>
-    <script src="/dest/js/SideNav.js"></script>
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//code.jquery.com">
+    <link href="src/css/googleRobotFont.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="dest/scss/sideNavi.css">
+    <link rel="stylesheet" href="dest/scss/app.css">
+    <link rel="stylesheet" href="src/css/animate.css">
+    <link rel="stylesheet" href="node_modules/fullpage.js/dist/jquery.fullpage.min.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/gsap/src/minified/TweenMax.min.js"></script>
+    <script src="node_modules/fullpage.js/dist/jquery.fullpage.min.js"></script>
+    <script src="src/js/SideNav.js"></script>
 </head>
-<style>
-    body{
-        background-color: #eee;
-    }
-</style>
 <body>
-<section class="km-side-navi" id="exampleSide"></section>
-<section class="km-side-navi" id="exampleSide2"></section>
+    <section class="km-side-navi" id="exampleSide"></section>
+    <div id="fullpage">
+    <div class="section">
+            <div class="m-inner-wrap">
+                <h2>Animate</h2>
+            </div>
+        </div>
+        <div class="section">
+            <div class="m-inner-wrap">
+                <h2>Nice</h2>
+            </div>
+        </div>
+        <div class="section">
+            <div class="m-inner-wrap">
+               <h2>Customize</h2>
+            </div>
+        </div>
+        <div class="section">
+            <div class="m-inner-wrap">
+                <h2>Friendly</h2>
+            </div>
+        </div>
+    </div>
 </body>
-<script>    
-    var SideNav = new SideNavi({id:'exampleSide2'});
+<script>
+$(document).ready(function() {
     var options = {
-        menu : ['item1','item2','item3','item4','item5'],
-        position : 'left',
+        menu : ['Animate','Nice','Customize','Friendly'],
+        position : 'right',
         themeColor : '#1ed1dc',
-        id : 'exampleSide'
+        id : 'exampleSide',
+        afterInit : function(){
+            var currentIndex = parseInt($('#fullpage').find('.fp-section.active').attr('data-anchor'));
+            sidenav.activeMenuAndTag(currentIndex);
+        }
     }
-    var SideNav = new SideNavi(options);
+    var sidenav = new SideNavi(options);
+    $('#fullpage').fullpage({
+        sectionsColor: ['#f5f7f9', '#eeefff', '#fff', '#eee'],
+        anchors: ['1', '2', '3', '4', '5'],
+        onLeave: function(index,nextIndex){
+            sidenav.activeMenuAndTag(nextIndex);
+        },
+        afterLoad:function(index){
+            var loadedSection = $(this);
+            switch(index){
+                case 1 : loadedSection.find('h2').addClass('animated fadeInUp');
+                break;
+                case 2 : loadedSection.find('h2').addClass('animated rotateIn');
+                break;
+                case 3 : loadedSection.find('h2').addClass('animated rotateInDownLeft');
+                break;
+                case 4 : loadedSection.find('h2').addClass('animated rotateInUpRight');
+                break;
+            }
+            
+        }
+    });
+});
 </script>
 </html>

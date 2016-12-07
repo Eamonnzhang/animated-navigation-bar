@@ -10,7 +10,7 @@
          factory(jQuery,TweenMax);
      }
  }(function ($,TweenMax) {
-      var SideNavi = function(obj) {
+      var SideNavi = function(obj,cb) {
         var opt = {
             menu : ['part1','part2','part3','part4'],
             themeColor : '#dc1e24',
@@ -18,7 +18,7 @@
             position : 'right'
         }
         $.extend(opt,obj);
-         var _this = this,
+        var _this = this,
             $sideNavi = $("#"+opt.id);
         $sideNavi.append('<article class="km-side-navi-outer"><div class="km-name-tag"><figure class="km-bg"></figure><ul></ul></div><ul class="km-side-navi-ul"></ul></article>');
         var $sideNaviOuter =$sideNavi.find(".km-side-navi-outer"),
@@ -31,17 +31,25 @@
             $tagBg = $nameTag.find(".km-bg"),
             tempArr=[],
             scrollSpeed = 500,
+            initTime = 0,
+            isAnimationFinished = false,
             m = 32;
         this.crtID = -1;
         this.menu = [];
         $sideNavi.css(opt['position'],'2%');
         TweenMax.to($sideNavi,1,{opacity:1});
         TweenMax.set($tagBg, {css:{"background-color":opt.themeColor}});
-        this.init = function(i) {
-             for (var p in opt.menu) {
-                 console.log(p);
-                _this.appendMenu(opt.menu[p], 100 * p + 1E3 * i *0.01, parseInt(p)+1)
-             }
+        this.init = function() {
+            for (var p in opt.menu) {
+                initTime += 100*p;
+                _this.appendMenu(opt.menu[p], 100 * p, parseInt(p)+1)
+            }
+            if(opt.afterInit){
+                setTimeout(opt.afterInit,initTime+600)
+            }
+            setTimeout(function(){
+                isAnimationFinished = true
+            },initTime+599)
         };
         this.appendMenu = function(menuName, time , itemId) {
             var $nameTagLi = $("<li>" + menuName + "</li>").appendTo($nameTagUl);
@@ -51,8 +59,8 @@
                 offsetX: $nameTagLi.offset().left - $sideNaviOuter.offset().left,
                 width: $nameTagLi.outerWidth()
             };
-            var $tLi = $("<li></li>"),
-                $tHdBtn = $('<div class="km-hiddenBtn"></div>'),
+            var $tLi = $("<li data-menuanchor='"+itemId+"'></li>");
+            var $tHdBtn = $('<a class="km-hiddenBtn" href="#'+itemId+'"></a>'),
                 $circle = $('<span class="km-circle"></span>'),
                 $lime = $('<div class="km-semi-circle"></div>');
             TweenMax.set($sideNaviLi, {
@@ -198,6 +206,13 @@
                 timer = null
             }, 900)
         };
+        this.activeMenuAndTag = function(itemId){
+            if(!isAnimationFinished){
+                return;
+            }
+            this.menuChange(itemId);
+            this.tagViewMoment(itemId);
+        }
         function setTransition(target,time,func){
             time = time + "s " + func;
             target.css({"-webkit-transition": time,
@@ -208,7 +223,7 @@
             setTransition($nameTagUl, .5, "cubic-bezier(0.72,-0.21,0.17,1)")
         }
         setAnimate.call(this);
-        this.init(1);
+        this.init();
     };
     window.SideNavi = SideNavi;
     return SideNavi;
