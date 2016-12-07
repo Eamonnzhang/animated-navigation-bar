@@ -18,9 +18,14 @@ Then HTML:
 Finally use Javascript:
 ```Javascript
 var options = {
-    menu : ['item1','item2','item3','item4','item5'],
-    position : 'left',
-    themeColor : '#1ed1dc',
+    //default : ['part1','part2','part3','part4']
+    menu : ['item1','item2','item3','item4','item5'],
+    //default : 'right'
+    position : 'left', //you can set 'left' or 'right'
+    //default : '#dc1e24'
+    themeColor : '#1ed1dc', //it will change the name background-color and semicircle's background-color
+    //default : '#fff'
+    txtColor: '#ffffff', //it will change the menu item text's color
     id : 'exampleSide'
 }
 var SideNav = new SideNavi(options);
