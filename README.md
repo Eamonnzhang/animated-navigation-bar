@@ -26,7 +26,10 @@ var options = {
     themeColor : '#1ed1dc', //it will change the name background-color and semicircle's background-color
     //default : '#fff'
     txtColor: '#ffffff', //it will change the menu item text's color
-    id : 'exampleSide'
+    id : 'exampleSide', //the DOM you want to genorate
+    afterInit : function(){ //this function will execute after all the sidenav's animation is done
+        alert('afterInit')
+    }
 }
 var SideNav = new SideNavi(options);
 ```
